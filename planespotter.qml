@@ -222,7 +222,8 @@ Window {
                     //it calls startFlight in the controller
                     myPlaneAnimation.start(); // move the plane
                     myPlane.departed(); // show messages
-
+                    myPlaneControl.onClicked();
+                    //myPlaneControllerOnClicked();
 
                 }
             }

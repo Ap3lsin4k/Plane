@@ -58,6 +58,7 @@
 #include <QEasingCurve>
 #include <QGeoCoordinate>
 #include <QtPositioning/private/qwebmercator_p.h>
+#include <QDebug>
 
 #define ANIMATION_DURATION 4000
 
@@ -71,7 +72,6 @@ class PlaneController: public QObject
     Q_PROPERTY(QGeoCoordinate from READ from WRITE setFrom NOTIFY fromChanged)
     Q_PROPERTY(QGeoCoordinate to READ to WRITE setTo NOTIFY toChanged)
     //! [C++Pilot1]
-
 public:
     PlaneController()
     {
@@ -137,6 +137,9 @@ public slots:
             toCoordinate = fromCoordinate;
             fromCoordinate = currentPosition;
         }
+    }
+    void onClicked(){
+        qDebug()<<"onClicked!";
     }
 
 signals:
