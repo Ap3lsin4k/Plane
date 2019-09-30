@@ -127,7 +127,7 @@ public slots:
         finishTime = startTime.addMSecs(ANIMATION_DURATION);
 
         timer.start(15, this);
-        emit departed();
+        emit departed(); // відправлення
     }
 //! [C++Pilot2]
 

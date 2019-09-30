@@ -69,6 +69,8 @@ Window {
     property variant point1: QtPositioning.coordinate(53.5175, 14.384)
     property variant point2: QtPositioning.coordinate(60.9154, 11.7425)
     property variant point3: QtPositioning.coordinate(50.358157, 26.697923)
+    property variant shepetivka: QtPositioning.coordinate(50.181360, 27.053639)
+    property variant kyiv: QtPositioning.coordinate(50.464055, 30.498494)
 
 
 
@@ -212,10 +214,15 @@ Window {
                         return;
                     }
 
-                    //myPlaneControl.swapDestinations();
+                    //myPlaneControl.swapDestinations(); feature
+
+                    //set variable
                     myPlaneAnimation.rotationDirection = myPlaneControl.position.azimuthTo(myPlaneControl.to)
-                    myPlaneAnimation.start();
-                    myPlane.departed();
+
+                    //it calls startFlight in the controller
+                    myPlaneAnimation.start(); // move the plane
+                    myPlane.departed(); // show messages
+
 
                 }
             }
@@ -224,19 +231,24 @@ Window {
             SequentialAnimation {
                 id: myPlaneAnimation
                 property real rotationDirection : 0;
-             /*   NumberAnimation {
+
+                NumberAnimation {
+                    // Rotation to next point
+                    /*
                     target: myPlane; property: "bearing"; duration: 1000
                     easing.type: Easing.InOutQuad
-                    to: myPlaneAnimation.rotationDirection
-                }*/
+                    to: myPlaneAnimation.rotationDirection*/
+                }
+                // called when "myPlaneAnimation.start()"
                 ScriptAction { script: myPlaneControl.startFlight() }
             }
             //! [CppPlane3]
 
+            // when qml is loaded
             Component.onCompleted: {
-                myPlaneControl.position = point1;
-                myPlaneControl.to = point2;
-                myPlaneControl.from = point1;
+                myPlaneControl.position = london;  // default position before moving
+                myPlaneControl.from = point1;  // start position
+                myPlaneControl.to = point2;  // end position
                 myPlaneControl.arrived.connect(arrived)
             }
 
