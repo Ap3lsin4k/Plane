@@ -66,8 +66,11 @@ Window {
     property variant berlin: QtPositioning.coordinate(52.5175, 13.384)
     property variant oslo: QtPositioning.coordinate(59.9154, 10.7425)
     property variant london: QtPositioning.coordinate(51.5, 0.1275)
-    property variant shepetivka: QtPositioning.coordinate(53.5175, 14.384)
-    property variant slavyta: QtPositioning.coordinate(60.9154, 11.7425)
+    property variant point1: QtPositioning.coordinate(53.5175, 14.384)
+    property variant point2: QtPositioning.coordinate(60.9154, 11.7425)
+    property variant point3: QtPositioning.coordinate(50.358157, 26.697923)
+
+
 
     Map {
         id: mapOfEurope
@@ -209,10 +212,11 @@ Window {
                         return;
                     }
 
-                    myPlaneControl.swapDestinations();
+                    //myPlaneControl.swapDestinations();
                     myPlaneAnimation.rotationDirection = myPlaneControl.position.azimuthTo(myPlaneControl.to)
                     myPlaneAnimation.start();
                     myPlane.departed();
+
                 }
             }
         //! [CppPlane1]
@@ -220,36 +224,57 @@ Window {
             SequentialAnimation {
                 id: myPlaneAnimation
                 property real rotationDirection : 0;
-                NumberAnimation {
+             /*   NumberAnimation {
                     target: myPlane; property: "bearing"; duration: 1000
                     easing.type: Easing.InOutQuad
                     to: myPlaneAnimation.rotationDirection
-                }
+                }*/
                 ScriptAction { script: myPlaneControl.startFlight() }
             }
             //! [CppPlane3]
 
             Component.onCompleted: {
-                myPlaneControl.position = shepetivka;
-                myPlaneControl.to = slavyta;
-                myPlaneControl.from = shepetivka;
+                myPlaneControl.position = point1;
+                myPlaneControl.to = point2;
+                myPlaneControl.from = point1;
                 myPlaneControl.arrived.connect(arrived)
             }
 
             function arrived(){
-                if (myPlaneControl.to === slavyta)
+                if (myPlaneControl.to === point2)
                     myPlane.showMessage(qsTr("Hello Mthfck!"))
-                else if (myPlaneControl.to === shepetivka)
+                else if (myPlaneControl.to === point1)
                     myPlane.showMessage(qsTr("Hello b*tches!"))
             }
 
             function departed(){
-                if (myPlaneControl.from === slavyta)
+                if (myPlaneControl.from === point2)
                     myPlane.showMessage(qsTr("See you bro!"))
-                else if (myPlaneControl.from === shepetivka)
+                else if (myPlaneControl.from === point1)
                     myPlane.showMessage(qsTr("Bye, see you soon!"))
             }
         //! [CppPlane2]
+            //! [CppPlane1]
+                //! [CppPlane3]
+ /*           SequentialAnimation {
+                id: myPlaneAnimation2
+                property real rotationDirection : 0;
+                NumberAnimation {
+                    target: myPlane; property: "bearing"; duration: 1000
+                    easing.type: Easing.InOutQuad
+                    to: myPlaneAnimation2.rotationDirection
+                }
+                ScriptAction { script: myPlaneControl.startFlight() }
+            }*/
+            //! [CppPlane3]
+/*
+            Component.onCompleted: {
+                myPlaneControl.position = point2;
+                myPlaneControl.to = point3;
+                myPlaneControl.from =point2 ;
+                myPlaneControl.arrived.connect(arrived)
+            }*/
+
         }
 
         visibleRegion: viewOfEurope
